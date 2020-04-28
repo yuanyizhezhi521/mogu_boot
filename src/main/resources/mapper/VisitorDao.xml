@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.VisitorDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.Visitor" id="VisitorMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="loginCount" column="login_count" jdbcType="OTHER"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="VisitorMap">
+        select
+          uid, user_name, email, login_count, last_login_time, last_login_ip, status, create_time, update_time
+        from moguboot.visitor
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="VisitorMap">
+        select
+          uid, user_name, email, login_count, last_login_time, last_login_ip, status, create_time, update_time
+        from moguboot.visitor
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="VisitorMap">
+        select
+          uid, user_name, email, login_count, last_login_time, last_login_ip, status, create_time, update_time
+        from moguboot.visitor
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="loginCount != null">
+                and login_count = #{loginCount}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                and last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.visitor(user_name, email, login_count, last_login_time, last_login_ip, status, create_time, update_time)
+        values (#{userName}, #{email}, #{loginCount}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.visitor
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="loginCount != null">
+                login_count = #{loginCount},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.visitor where uid = #{uid}
+    </delete>
+
+</mapper>

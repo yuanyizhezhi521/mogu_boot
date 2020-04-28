@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.RoleDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.Role" id="RoleMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="categoryMenuUids" column="category_menu_uids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoleMap">
+        select
+          uid, role_name, create_time, update_time, status, summary, category_menu_uids
+        from moguboot.role
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RoleMap">
+        select
+          uid, role_name, create_time, update_time, status, summary, category_menu_uids
+        from moguboot.role
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoleMap">
+        select
+          uid, role_name, create_time, update_time, status, summary, category_menu_uids
+        from moguboot.role
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="categoryMenuUids != null and categoryMenuUids != ''">
+                and category_menu_uids = #{categoryMenuUids}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.role(role_name, create_time, update_time, status, summary, category_menu_uids)
+        values (#{roleName}, #{createTime}, #{updateTime}, #{status}, #{summary}, #{categoryMenuUids})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="categoryMenuUids != null and categoryMenuUids != ''">
+                category_menu_uids = #{categoryMenuUids},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.role where uid = #{uid}
+    </delete>
+
+</mapper>

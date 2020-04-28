@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.CategoryMenuDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.CategoryMenu" id="CategoryMenuMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="menuLevel" column="menu_level" jdbcType="OTHER"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="parentUid" column="parent_uid" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isShow" column="is_show" jdbcType="OTHER"/>
+        <result property="menuType" column="menu_type" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CategoryMenuMap">
+        select
+          uid, name, menu_level, summary, parent_uid, url, icon, sort, status, create_time, update_time, is_show, menu_type
+        from moguboot.category_menu
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CategoryMenuMap">
+        select
+          uid, name, menu_level, summary, parent_uid, url, icon, sort, status, create_time, update_time, is_show, menu_type
+        from moguboot.category_menu
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CategoryMenuMap">
+        select
+          uid, name, menu_level, summary, parent_uid, url, icon, sort, status, create_time, update_time, is_show, menu_type
+        from moguboot.category_menu
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="menuLevel != null">
+                and menu_level = #{menuLevel}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                and parent_uid = #{parentUid}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="icon != null and icon != ''">
+                and icon = #{icon}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isShow != null">
+                and is_show = #{isShow}
+            </if>
+            <if test="menuType != null">
+                and menu_type = #{menuType}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.category_menu(name, menu_level, summary, parent_uid, url, icon, sort, status, create_time, update_time, is_show, menu_type)
+        values (#{name}, #{menuLevel}, #{summary}, #{parentUid}, #{url}, #{icon}, #{sort}, #{status}, #{createTime}, #{updateTime}, #{isShow}, #{menuType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.category_menu
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="menuLevel != null">
+                menu_level = #{menuLevel},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                parent_uid = #{parentUid},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="icon != null and icon != ''">
+                icon = #{icon},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow},
+            </if>
+            <if test="menuType != null">
+                menu_type = #{menuType},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.category_menu where uid = #{uid}
+    </delete>
+
+</mapper>

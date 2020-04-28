@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.CommentReportDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.CommentReport" id="CommentReportMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userUid" column="user_uid" jdbcType="VARCHAR"/>
+        <result property="reportCommentUid" column="report_comment_uid" jdbcType="VARCHAR"/>
+        <result property="reportUserUid" column="report_user_uid" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="progress" column="progress" jdbcType="OTHER"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommentReportMap">
+        select
+          uid, user_uid, report_comment_uid, report_user_uid, content, progress, status, create_time, update_time
+        from moguboot.comment_report
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CommentReportMap">
+        select
+          uid, user_uid, report_comment_uid, report_user_uid, content, progress, status, create_time, update_time
+        from moguboot.comment_report
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommentReportMap">
+        select
+          uid, user_uid, report_comment_uid, report_user_uid, content, progress, status, create_time, update_time
+        from moguboot.comment_report
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userUid != null and userUid != ''">
+                and user_uid = #{userUid}
+            </if>
+            <if test="reportCommentUid != null and reportCommentUid != ''">
+                and report_comment_uid = #{reportCommentUid}
+            </if>
+            <if test="reportUserUid != null and reportUserUid != ''">
+                and report_user_uid = #{reportUserUid}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="progress != null">
+                and progress = #{progress}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.comment_report(user_uid, report_comment_uid, report_user_uid, content, progress, status, create_time, update_time)
+        values (#{userUid}, #{reportCommentUid}, #{reportUserUid}, #{content}, #{progress}, #{status}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.comment_report
+        <set>
+            <if test="userUid != null and userUid != ''">
+                user_uid = #{userUid},
+            </if>
+            <if test="reportCommentUid != null and reportCommentUid != ''">
+                report_comment_uid = #{reportCommentUid},
+            </if>
+            <if test="reportUserUid != null and reportUserUid != ''">
+                report_user_uid = #{reportUserUid},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="progress != null">
+                progress = #{progress},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.comment_report where uid = #{uid}
+    </delete>
+
+</mapper>

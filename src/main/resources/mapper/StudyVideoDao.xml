@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.StudyVideoDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.StudyVideo" id="StudyVideoMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="fileUid" column="file_uid" jdbcType="VARCHAR"/>
+        <result property="resourceSortUid" column="resource_sort_uid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="baiduPath" column="baidu_path" jdbcType="VARCHAR"/>
+        <result property="clickCount" column="click_count" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="parentUid" column="parent_uid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudyVideoMap">
+        select
+          uid, file_uid, resource_sort_uid, name, summary, content, baidu_path, click_count, status, create_time, update_time, parent_uid
+        from moguboot.study_video
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudyVideoMap">
+        select
+          uid, file_uid, resource_sort_uid, name, summary, content, baidu_path, click_count, status, create_time, update_time, parent_uid
+        from moguboot.study_video
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="StudyVideoMap">
+        select
+          uid, file_uid, resource_sort_uid, name, summary, content, baidu_path, click_count, status, create_time, update_time, parent_uid
+        from moguboot.study_video
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="fileUid != null and fileUid != ''">
+                and file_uid = #{fileUid}
+            </if>
+            <if test="resourceSortUid != null and resourceSortUid != ''">
+                and resource_sort_uid = #{resourceSortUid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="baiduPath != null and baiduPath != ''">
+                and baidu_path = #{baiduPath}
+            </if>
+            <if test="clickCount != null and clickCount != ''">
+                and click_count = #{clickCount}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                and parent_uid = #{parentUid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.study_video(file_uid, resource_sort_uid, name, summary, content, baidu_path, click_count, status, create_time, update_time, parent_uid)
+        values (#{fileUid}, #{resourceSortUid}, #{name}, #{summary}, #{content}, #{baiduPath}, #{clickCount}, #{status}, #{createTime}, #{updateTime}, #{parentUid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.study_video
+        <set>
+            <if test="fileUid != null and fileUid != ''">
+                file_uid = #{fileUid},
+            </if>
+            <if test="resourceSortUid != null and resourceSortUid != ''">
+                resource_sort_uid = #{resourceSortUid},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="baiduPath != null and baiduPath != ''">
+                baidu_path = #{baiduPath},
+            </if>
+            <if test="clickCount != null and clickCount != ''">
+                click_count = #{clickCount},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                parent_uid = #{parentUid},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.study_video where uid = #{uid}
+    </delete>
+
+</mapper>

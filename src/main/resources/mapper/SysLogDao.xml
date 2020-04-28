@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.SysLogDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.SysLog" id="SysLogMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="adminUid" column="admin_uid" jdbcType="VARCHAR"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="classPath" column="class_path" jdbcType="VARCHAR"/>
+        <result property="method" column="method" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="OTHER"/>
+        <result property="operation" column="operation" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="ipSource" column="ip_source" jdbcType="VARCHAR"/>
+        <result property="spendTime" column="spend_time" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysLogMap">
+        select
+          uid, user_name, admin_uid, ip, url, type, class_path, method, params, operation, status, create_time, update_time, ip_source, spend_time
+        from moguboot.sys_log
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysLogMap">
+        select
+          uid, user_name, admin_uid, ip, url, type, class_path, method, params, operation, status, create_time, update_time, ip_source, spend_time
+        from moguboot.sys_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysLogMap">
+        select
+          uid, user_name, admin_uid, ip, url, type, class_path, method, params, operation, status, create_time, update_time, ip_source, spend_time
+        from moguboot.sys_log
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                and admin_uid = #{adminUid}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="classPath != null and classPath != ''">
+                and class_path = #{classPath}
+            </if>
+            <if test="method != null and method != ''">
+                and method = #{method}
+            </if>
+            <if test="params != null">
+                and params = #{params}
+            </if>
+            <if test="operation != null and operation != ''">
+                and operation = #{operation}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                and ip_source = #{ipSource}
+            </if>
+            <if test="spendTime != null">
+                and spend_time = #{spendTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.sys_log(user_name, admin_uid, ip, url, type, class_path, method, params, operation, status, create_time, update_time, ip_source, spend_time)
+        values (#{userName}, #{adminUid}, #{ip}, #{url}, #{type}, #{classPath}, #{method}, #{params}, #{operation}, #{status}, #{createTime}, #{updateTime}, #{ipSource}, #{spendTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.sys_log
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                admin_uid = #{adminUid},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="classPath != null and classPath != ''">
+                class_path = #{classPath},
+            </if>
+            <if test="method != null and method != ''">
+                method = #{method},
+            </if>
+            <if test="params != null">
+                params = #{params},
+            </if>
+            <if test="operation != null and operation != ''">
+                operation = #{operation},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                ip_source = #{ipSource},
+            </if>
+            <if test="spendTime != null">
+                spend_time = #{spendTime},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.sys_log where uid = #{uid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.PictureSortDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.PictureSort" id="PictureSortMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="fileUid" column="file_uid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="parentUid" column="parent_uid" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PictureSortMap">
+        select
+          uid, file_uid, name, status, create_time, update_time, parent_uid, sort
+        from moguboot.picture_sort
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PictureSortMap">
+        select
+          uid, file_uid, name, status, create_time, update_time, parent_uid, sort
+        from moguboot.picture_sort
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="PictureSortMap">
+        select
+          uid, file_uid, name, status, create_time, update_time, parent_uid, sort
+        from moguboot.picture_sort
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="fileUid != null and fileUid != ''">
+                and file_uid = #{fileUid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                and parent_uid = #{parentUid}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.picture_sort(file_uid, name, status, create_time, update_time, parent_uid, sort)
+        values (#{fileUid}, #{name}, #{status}, #{createTime}, #{updateTime}, #{parentUid}, #{sort})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.picture_sort
+        <set>
+            <if test="fileUid != null and fileUid != ''">
+                file_uid = #{fileUid},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="parentUid != null and parentUid != ''">
+                parent_uid = #{parentUid},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.picture_sort where uid = #{uid}
+    </delete>
+
+</mapper>

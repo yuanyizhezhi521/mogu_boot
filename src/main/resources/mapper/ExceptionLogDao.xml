@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.ExceptionLogDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.ExceptionLog" id="ExceptionLogMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="exceptionJson" column="exception_json" jdbcType="OTHER"/>
+        <result property="exceptionMessage" column="exception_message" jdbcType="OTHER"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="ipSource" column="ip_source" jdbcType="VARCHAR"/>
+        <result property="method" column="method" jdbcType="VARCHAR"/>
+        <result property="operation" column="operation" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ExceptionLogMap">
+        select
+          uid, exception_json, exception_message, status, create_time, update_time, ip, ip_source, method, operation, params
+        from moguboot.exception_log
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ExceptionLogMap">
+        select
+          uid, exception_json, exception_message, status, create_time, update_time, ip, ip_source, method, operation, params
+        from moguboot.exception_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ExceptionLogMap">
+        select
+          uid, exception_json, exception_message, status, create_time, update_time, ip, ip_source, method, operation, params
+        from moguboot.exception_log
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="exceptionJson != null">
+                and exception_json = #{exceptionJson}
+            </if>
+            <if test="exceptionMessage != null">
+                and exception_message = #{exceptionMessage}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                and ip_source = #{ipSource}
+            </if>
+            <if test="method != null and method != ''">
+                and method = #{method}
+            </if>
+            <if test="operation != null and operation != ''">
+                and operation = #{operation}
+            </if>
+            <if test="params != null">
+                and params = #{params}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.exception_log(exception_json, exception_message, status, create_time, update_time, ip, ip_source, method, operation, params)
+        values (#{exceptionJson}, #{exceptionMessage}, #{status}, #{createTime}, #{updateTime}, #{ip}, #{ipSource}, #{method}, #{operation}, #{params})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.exception_log
+        <set>
+            <if test="exceptionJson != null">
+                exception_json = #{exceptionJson},
+            </if>
+            <if test="exceptionMessage != null">
+                exception_message = #{exceptionMessage},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                ip_source = #{ipSource},
+            </if>
+            <if test="method != null and method != ''">
+                method = #{method},
+            </if>
+            <if test="operation != null and operation != ''">
+                operation = #{operation},
+            </if>
+            <if test="params != null">
+                params = #{params},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.exception_log where uid = #{uid}
+    </delete>
+
+</mapper>

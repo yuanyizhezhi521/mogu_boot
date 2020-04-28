@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.SysDictDataDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.SysDictData" id="SysDictDataMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="oid" column="oid" jdbcType="INTEGER"/>
+        <result property="dictTypeUid" column="dict_type_uid" jdbcType="VARCHAR"/>
+        <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>
+        <result property="dictValue" column="dict_value" jdbcType="VARCHAR"/>
+        <result property="cssClass" column="css_class" jdbcType="VARCHAR"/>
+        <result property="listClass" column="list_class" jdbcType="VARCHAR"/>
+        <result property="isDefault" column="is_default" jdbcType="OTHER"/>
+        <result property="createByUid" column="create_by_uid" jdbcType="VARCHAR"/>
+        <result property="updateByUid" column="update_by_uid" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysDictDataMap">
+        select
+          uid, oid, dict_type_uid, dict_label, dict_value, css_class, list_class, is_default, create_by_uid, update_by_uid, remark, status, create_time, update_time, is_publish, sort
+        from moguboot.sys_dict_data
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysDictDataMap">
+        select
+          uid, oid, dict_type_uid, dict_label, dict_value, css_class, list_class, is_default, create_by_uid, update_by_uid, remark, status, create_time, update_time, is_publish, sort
+        from moguboot.sys_dict_data
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysDictDataMap">
+        select
+          uid, oid, dict_type_uid, dict_label, dict_value, css_class, list_class, is_default, create_by_uid, update_by_uid, remark, status, create_time, update_time, is_publish, sort
+        from moguboot.sys_dict_data
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="oid != null">
+                and oid = #{oid}
+            </if>
+            <if test="dictTypeUid != null and dictTypeUid != ''">
+                and dict_type_uid = #{dictTypeUid}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and dict_label = #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and dict_value = #{dictValue}
+            </if>
+            <if test="cssClass != null and cssClass != ''">
+                and css_class = #{cssClass}
+            </if>
+            <if test="listClass != null and listClass != ''">
+                and list_class = #{listClass}
+            </if>
+            <if test="isDefault != null">
+                and is_default = #{isDefault}
+            </if>
+            <if test="createByUid != null and createByUid != ''">
+                and create_by_uid = #{createByUid}
+            </if>
+            <if test="updateByUid != null and updateByUid != ''">
+                and update_by_uid = #{updateByUid}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isPublish != null and isPublish != ''">
+                and is_publish = #{isPublish}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.sys_dict_data(oid, dict_type_uid, dict_label, dict_value, css_class, list_class, is_default, create_by_uid, update_by_uid, remark, status, create_time, update_time, is_publish, sort)
+        values (#{oid}, #{dictTypeUid}, #{dictLabel}, #{dictValue}, #{cssClass}, #{listClass}, #{isDefault}, #{createByUid}, #{updateByUid}, #{remark}, #{status}, #{createTime}, #{updateTime}, #{isPublish}, #{sort})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.sys_dict_data
+        <set>
+            <if test="oid != null">
+                oid = #{oid},
+            </if>
+            <if test="dictTypeUid != null and dictTypeUid != ''">
+                dict_type_uid = #{dictTypeUid},
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                dict_label = #{dictLabel},
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                dict_value = #{dictValue},
+            </if>
+            <if test="cssClass != null and cssClass != ''">
+                css_class = #{cssClass},
+            </if>
+            <if test="listClass != null and listClass != ''">
+                list_class = #{listClass},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault},
+            </if>
+            <if test="createByUid != null and createByUid != ''">
+                create_by_uid = #{createByUid},
+            </if>
+            <if test="updateByUid != null and updateByUid != ''">
+                update_by_uid = #{updateByUid},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isPublish != null and isPublish != ''">
+                is_publish = #{isPublish},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.sys_dict_data where uid = #{uid}
+    </delete>
+
+</mapper>

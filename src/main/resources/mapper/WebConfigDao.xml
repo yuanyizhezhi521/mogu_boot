@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.WebConfigDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.WebConfig" id="WebConfigMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="recordNum" column="record_num" jdbcType="VARCHAR"/>
+        <result property="startComment" column="start_comment" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="aliPay" column="ali_pay" jdbcType="VARCHAR"/>
+        <result property="weixinPay" column="weixin_pay" jdbcType="VARCHAR"/>
+        <result property="github" column="github" jdbcType="VARCHAR"/>
+        <result property="gitee" column="gitee" jdbcType="VARCHAR"/>
+        <result property="qqNumber" column="qq_number" jdbcType="VARCHAR"/>
+        <result property="qqGroup" column="qq_group" jdbcType="VARCHAR"/>
+        <result property="weChat" column="we_chat" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="showList" column="show_list" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="WebConfigMap">
+        select
+          uid, logo, name, summary, keyword, author, record_num, start_comment, status, create_time, update_time, title, ali_pay, weixin_pay, github, gitee, qq_number, qq_group, we_chat, email, show_list
+        from moguboot.web_config
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="WebConfigMap">
+        select
+          uid, logo, name, summary, keyword, author, record_num, start_comment, status, create_time, update_time, title, ali_pay, weixin_pay, github, gitee, qq_number, qq_group, we_chat, email, show_list
+        from moguboot.web_config
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="WebConfigMap">
+        select
+          uid, logo, name, summary, keyword, author, record_num, start_comment, status, create_time, update_time, title, ali_pay, weixin_pay, github, gitee, qq_number, qq_group, we_chat, email, show_list
+        from moguboot.web_config
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="logo != null and logo != ''">
+                and logo = #{logo}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and keyword = #{keyword}
+            </if>
+            <if test="author != null and author != ''">
+                and author = #{author}
+            </if>
+            <if test="recordNum != null and recordNum != ''">
+                and record_num = #{recordNum}
+            </if>
+            <if test="startComment != null and startComment != ''">
+                and start_comment = #{startComment}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="aliPay != null and aliPay != ''">
+                and ali_pay = #{aliPay}
+            </if>
+            <if test="weixinPay != null and weixinPay != ''">
+                and weixin_pay = #{weixinPay}
+            </if>
+            <if test="github != null and github != ''">
+                and github = #{github}
+            </if>
+            <if test="gitee != null and gitee != ''">
+                and gitee = #{gitee}
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                and qq_number = #{qqNumber}
+            </if>
+            <if test="qqGroup != null and qqGroup != ''">
+                and qq_group = #{qqGroup}
+            </if>
+            <if test="weChat != null and weChat != ''">
+                and we_chat = #{weChat}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="showList != null and showList != ''">
+                and show_list = #{showList}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.web_config(logo, name, summary, keyword, author, record_num, start_comment, status, create_time, update_time, title, ali_pay, weixin_pay, github, gitee, qq_number, qq_group, we_chat, email, show_list)
+        values (#{logo}, #{name}, #{summary}, #{keyword}, #{author}, #{recordNum}, #{startComment}, #{status}, #{createTime}, #{updateTime}, #{title}, #{aliPay}, #{weixinPay}, #{github}, #{gitee}, #{qqNumber}, #{qqGroup}, #{weChat}, #{email}, #{showList})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.web_config
+        <set>
+            <if test="logo != null and logo != ''">
+                logo = #{logo},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="keyword != null and keyword != ''">
+                keyword = #{keyword},
+            </if>
+            <if test="author != null and author != ''">
+                author = #{author},
+            </if>
+            <if test="recordNum != null and recordNum != ''">
+                record_num = #{recordNum},
+            </if>
+            <if test="startComment != null and startComment != ''">
+                start_comment = #{startComment},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="aliPay != null and aliPay != ''">
+                ali_pay = #{aliPay},
+            </if>
+            <if test="weixinPay != null and weixinPay != ''">
+                weixin_pay = #{weixinPay},
+            </if>
+            <if test="github != null and github != ''">
+                github = #{github},
+            </if>
+            <if test="gitee != null and gitee != ''">
+                gitee = #{gitee},
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                qq_number = #{qqNumber},
+            </if>
+            <if test="qqGroup != null and qqGroup != ''">
+                qq_group = #{qqGroup},
+            </if>
+            <if test="weChat != null and weChat != ''">
+                we_chat = #{weChat},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="showList != null and showList != ''">
+                show_list = #{showList},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.web_config where uid = #{uid}
+    </delete>
+
+</mapper>

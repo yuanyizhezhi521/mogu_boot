@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.LinkDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.Link" id="LinkMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="clickCount" column="click_count" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="linkStatus" column="link_status" jdbcType="OTHER"/>
+        <result property="userUid" column="user_uid" jdbcType="VARCHAR"/>
+        <result property="adminUid" column="admin_uid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LinkMap">
+        select
+          uid, title, summary, url, click_count, create_time, update_time, status, sort, link_status, user_uid, admin_uid
+        from moguboot.link
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LinkMap">
+        select
+          uid, title, summary, url, click_count, create_time, update_time, status, sort, link_status, user_uid, admin_uid
+        from moguboot.link
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LinkMap">
+        select
+          uid, title, summary, url, click_count, create_time, update_time, status, sort, link_status, user_uid, admin_uid
+        from moguboot.link
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="clickCount != null">
+                and click_count = #{clickCount}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="linkStatus != null">
+                and link_status = #{linkStatus}
+            </if>
+            <if test="userUid != null and userUid != ''">
+                and user_uid = #{userUid}
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                and admin_uid = #{adminUid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.link(title, summary, url, click_count, create_time, update_time, status, sort, link_status, user_uid, admin_uid)
+        values (#{title}, #{summary}, #{url}, #{clickCount}, #{createTime}, #{updateTime}, #{status}, #{sort}, #{linkStatus}, #{userUid}, #{adminUid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.link
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="clickCount != null">
+                click_count = #{clickCount},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="linkStatus != null">
+                link_status = #{linkStatus},
+            </if>
+            <if test="userUid != null and userUid != ''">
+                user_uid = #{userUid},
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                admin_uid = #{adminUid},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.link where uid = #{uid}
+    </delete>
+
+</mapper>

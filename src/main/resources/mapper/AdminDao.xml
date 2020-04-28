@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.AdminDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.Admin" id="AdminMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="passWord" column="pass_word" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="validCode" column="valid_code" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="loginCount" column="login_count" jdbcType="OTHER"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="qqNumber" column="qq_number" jdbcType="VARCHAR"/>
+        <result property="weChat" column="we_chat" jdbcType="VARCHAR"/>
+        <result property="occupation" column="occupation" jdbcType="VARCHAR"/>
+        <result property="github" column="github" jdbcType="VARCHAR"/>
+        <result property="gitee" column="gitee" jdbcType="VARCHAR"/>
+        <result property="roleUid" column="role_uid" jdbcType="VARCHAR"/>
+        <result property="personResume" column="person_resume" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AdminMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume
+        from moguboot.admin
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AdminMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume
+        from moguboot.admin
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AdminMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume
+        from moguboot.admin
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord != null and passWord != ''">
+                and pass_word = #{passWord}
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and avatar = #{avatar}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="validCode != null and validCode != ''">
+                and valid_code = #{validCode}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="loginCount != null">
+                and login_count = #{loginCount}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                and last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name = #{nickName}
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                and qq_number = #{qqNumber}
+            </if>
+            <if test="weChat != null and weChat != ''">
+                and we_chat = #{weChat}
+            </if>
+            <if test="occupation != null and occupation != ''">
+                and occupation = #{occupation}
+            </if>
+            <if test="github != null and github != ''">
+                and github = #{github}
+            </if>
+            <if test="gitee != null and gitee != ''">
+                and gitee = #{gitee}
+            </if>
+            <if test="roleUid != null and roleUid != ''">
+                and role_uid = #{roleUid}
+            </if>
+            <if test="personResume != null and personResume != ''">
+                and person_resume = #{personResume}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.admin(user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume)
+        values (#{userName}, #{passWord}, #{gender}, #{avatar}, #{email}, #{birthday}, #{mobile}, #{validCode}, #{summary}, #{loginCount}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{createTime}, #{updateTime}, #{nickName}, #{qqNumber}, #{weChat}, #{occupation}, #{github}, #{gitee}, #{roleUid}, #{personResume})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.admin
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="passWord != null and passWord != ''">
+                pass_word = #{passWord},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="validCode != null and validCode != ''">
+                valid_code = #{validCode},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="loginCount != null">
+                login_count = #{loginCount},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                qq_number = #{qqNumber},
+            </if>
+            <if test="weChat != null and weChat != ''">
+                we_chat = #{weChat},
+            </if>
+            <if test="occupation != null and occupation != ''">
+                occupation = #{occupation},
+            </if>
+            <if test="github != null and github != ''">
+                github = #{github},
+            </if>
+            <if test="gitee != null and gitee != ''">
+                gitee = #{gitee},
+            </if>
+            <if test="roleUid != null and roleUid != ''">
+                role_uid = #{roleUid},
+            </if>
+            <if test="personResume != null and personResume != ''">
+                person_resume = #{personResume},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.admin where uid = #{uid}
+    </delete>
+
+</mapper>

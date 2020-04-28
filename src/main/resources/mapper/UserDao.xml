@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.UserDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.User" id="UserMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="passWord" column="pass_word" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="OTHER"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="validCode" column="valid_code" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="loginCount" column="login_count" jdbcType="OTHER"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="source" column="source" jdbcType="VARCHAR"/>
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="qqNumber" column="qq_number" jdbcType="VARCHAR"/>
+        <result property="weChat" column="we_chat" jdbcType="VARCHAR"/>
+        <result property="occupation" column="occupation" jdbcType="VARCHAR"/>
+        <result property="commentStatus" column="comment_status" jdbcType="OTHER"/>
+        <result property="ipSource" column="ip_source" jdbcType="VARCHAR"/>
+        <result property="browser" column="browser" jdbcType="VARCHAR"/>
+        <result property="os" column="os" jdbcType="VARCHAR"/>
+        <result property="startEmailNotification" column="start_email_notification" jdbcType="OTHER"/>
+        <result property="userTag" column="user_tag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, source, uuid, qq_number, we_chat, occupation, comment_status, ip_source, browser, os, start_email_notification, user_tag
+        from moguboot.user
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, source, uuid, qq_number, we_chat, occupation, comment_status, ip_source, browser, os, start_email_notification, user_tag
+        from moguboot.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+          uid, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, source, uuid, qq_number, we_chat, occupation, comment_status, ip_source, browser, os, start_email_notification, user_tag
+        from moguboot.user
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord != null and passWord != ''">
+                and pass_word = #{passWord}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and avatar = #{avatar}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="validCode != null and validCode != ''">
+                and valid_code = #{validCode}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="loginCount != null">
+                and login_count = #{loginCount}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                and last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name = #{nickName}
+            </if>
+            <if test="source != null and source != ''">
+                and source = #{source}
+            </if>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                and qq_number = #{qqNumber}
+            </if>
+            <if test="weChat != null and weChat != ''">
+                and we_chat = #{weChat}
+            </if>
+            <if test="occupation != null and occupation != ''">
+                and occupation = #{occupation}
+            </if>
+            <if test="commentStatus != null">
+                and comment_status = #{commentStatus}
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                and ip_source = #{ipSource}
+            </if>
+            <if test="browser != null and browser != ''">
+                and browser = #{browser}
+            </if>
+            <if test="os != null and os != ''">
+                and os = #{os}
+            </if>
+            <if test="startEmailNotification != null">
+                and start_email_notification = #{startEmailNotification}
+            </if>
+            <if test="userTag != null">
+                and user_tag = #{userTag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.user(user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, summary, login_count, last_login_time, last_login_ip, status, create_time, update_time, nick_name, source, uuid, qq_number, we_chat, occupation, comment_status, ip_source, browser, os, start_email_notification, user_tag)
+        values (#{userName}, #{passWord}, #{gender}, #{avatar}, #{email}, #{birthday}, #{mobile}, #{validCode}, #{summary}, #{loginCount}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{createTime}, #{updateTime}, #{nickName}, #{source}, #{uuid}, #{qqNumber}, #{weChat}, #{occupation}, #{commentStatus}, #{ipSource}, #{browser}, #{os}, #{startEmailNotification}, #{userTag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="passWord != null and passWord != ''">
+                pass_word = #{passWord},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="validCode != null and validCode != ''">
+                valid_code = #{validCode},
+            </if>
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
+            </if>
+            <if test="loginCount != null">
+                login_count = #{loginCount},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="source != null and source != ''">
+                source = #{source},
+            </if>
+            <if test="uuid != null and uuid != ''">
+                uuid = #{uuid},
+            </if>
+            <if test="qqNumber != null and qqNumber != ''">
+                qq_number = #{qqNumber},
+            </if>
+            <if test="weChat != null and weChat != ''">
+                we_chat = #{weChat},
+            </if>
+            <if test="occupation != null and occupation != ''">
+                occupation = #{occupation},
+            </if>
+            <if test="commentStatus != null">
+                comment_status = #{commentStatus},
+            </if>
+            <if test="ipSource != null and ipSource != ''">
+                ip_source = #{ipSource},
+            </if>
+            <if test="browser != null and browser != ''">
+                browser = #{browser},
+            </if>
+            <if test="os != null and os != ''">
+                os = #{os},
+            </if>
+            <if test="startEmailNotification != null">
+                start_email_notification = #{startEmailNotification},
+            </if>
+            <if test="userTag != null">
+                user_tag = #{userTag},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.user where uid = #{uid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.SystemConfigDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.SystemConfig" id="SystemConfigMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="qiNiuAccessKey" column="qi_niu_access_key" jdbcType="VARCHAR"/>
+        <result property="qiNiuSecretKey" column="qi_niu_secret_key" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="emailUserName" column="email_user_name" jdbcType="VARCHAR"/>
+        <result property="emailPassword" column="email_password" jdbcType="VARCHAR"/>
+        <result property="smtpAddress" column="smtp_address" jdbcType="VARCHAR"/>
+        <result property="smtpPort" column="smtp_port" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="qiNiuBucket" column="qi_niu_bucket" jdbcType="VARCHAR"/>
+        <result property="qiNiuArea" column="qi_niu_area" jdbcType="VARCHAR"/>
+        <result property="uploadQiNiu" column="upload_qi_niu" jdbcType="VARCHAR"/>
+        <result property="uploadLocal" column="upload_local" jdbcType="VARCHAR"/>
+        <result property="picturePriority" column="picture_priority" jdbcType="VARCHAR"/>
+        <result property="qiNiuPictureBaseUrl" column="qi_niu_picture_base_url" jdbcType="VARCHAR"/>
+        <result property="localPictureBaseUrl" column="local_picture_base_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SystemConfigMap">
+        select
+          uid, qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, smtp_address, smtp_port, status, create_time, update_time, qi_niu_bucket, qi_niu_area, upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url
+        from moguboot.system_config
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SystemConfigMap">
+        select
+          uid, qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, smtp_address, smtp_port, status, create_time, update_time, qi_niu_bucket, qi_niu_area, upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url
+        from moguboot.system_config
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SystemConfigMap">
+        select
+          uid, qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, smtp_address, smtp_port, status, create_time, update_time, qi_niu_bucket, qi_niu_area, upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url
+        from moguboot.system_config
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="qiNiuAccessKey != null and qiNiuAccessKey != ''">
+                and qi_niu_access_key = #{qiNiuAccessKey}
+            </if>
+            <if test="qiNiuSecretKey != null and qiNiuSecretKey != ''">
+                and qi_niu_secret_key = #{qiNiuSecretKey}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="emailUserName != null and emailUserName != ''">
+                and email_user_name = #{emailUserName}
+            </if>
+            <if test="emailPassword != null and emailPassword != ''">
+                and email_password = #{emailPassword}
+            </if>
+            <if test="smtpAddress != null and smtpAddress != ''">
+                and smtp_address = #{smtpAddress}
+            </if>
+            <if test="smtpPort != null and smtpPort != ''">
+                and smtp_port = #{smtpPort}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="qiNiuBucket != null and qiNiuBucket != ''">
+                and qi_niu_bucket = #{qiNiuBucket}
+            </if>
+            <if test="qiNiuArea != null and qiNiuArea != ''">
+                and qi_niu_area = #{qiNiuArea}
+            </if>
+            <if test="uploadQiNiu != null and uploadQiNiu != ''">
+                and upload_qi_niu = #{uploadQiNiu}
+            </if>
+            <if test="uploadLocal != null and uploadLocal != ''">
+                and upload_local = #{uploadLocal}
+            </if>
+            <if test="picturePriority != null and picturePriority != ''">
+                and picture_priority = #{picturePriority}
+            </if>
+            <if test="qiNiuPictureBaseUrl != null and qiNiuPictureBaseUrl != ''">
+                and qi_niu_picture_base_url = #{qiNiuPictureBaseUrl}
+            </if>
+            <if test="localPictureBaseUrl != null and localPictureBaseUrl != ''">
+                and local_picture_base_url = #{localPictureBaseUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.system_config(qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, smtp_address, smtp_port, status, create_time, update_time, qi_niu_bucket, qi_niu_area, upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url)
+        values (#{qiNiuAccessKey}, #{qiNiuSecretKey}, #{email}, #{emailUserName}, #{emailPassword}, #{smtpAddress}, #{smtpPort}, #{status}, #{createTime}, #{updateTime}, #{qiNiuBucket}, #{qiNiuArea}, #{uploadQiNiu}, #{uploadLocal}, #{picturePriority}, #{qiNiuPictureBaseUrl}, #{localPictureBaseUrl})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.system_config
+        <set>
+            <if test="qiNiuAccessKey != null and qiNiuAccessKey != ''">
+                qi_niu_access_key = #{qiNiuAccessKey},
+            </if>
+            <if test="qiNiuSecretKey != null and qiNiuSecretKey != ''">
+                qi_niu_secret_key = #{qiNiuSecretKey},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="emailUserName != null and emailUserName != ''">
+                email_user_name = #{emailUserName},
+            </if>
+            <if test="emailPassword != null and emailPassword != ''">
+                email_password = #{emailPassword},
+            </if>
+            <if test="smtpAddress != null and smtpAddress != ''">
+                smtp_address = #{smtpAddress},
+            </if>
+            <if test="smtpPort != null and smtpPort != ''">
+                smtp_port = #{smtpPort},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="qiNiuBucket != null and qiNiuBucket != ''">
+                qi_niu_bucket = #{qiNiuBucket},
+            </if>
+            <if test="qiNiuArea != null and qiNiuArea != ''">
+                qi_niu_area = #{qiNiuArea},
+            </if>
+            <if test="uploadQiNiu != null and uploadQiNiu != ''">
+                upload_qi_niu = #{uploadQiNiu},
+            </if>
+            <if test="uploadLocal != null and uploadLocal != ''">
+                upload_local = #{uploadLocal},
+            </if>
+            <if test="picturePriority != null and picturePriority != ''">
+                picture_priority = #{picturePriority},
+            </if>
+            <if test="qiNiuPictureBaseUrl != null and qiNiuPictureBaseUrl != ''">
+                qi_niu_picture_base_url = #{qiNiuPictureBaseUrl},
+            </if>
+            <if test="localPictureBaseUrl != null and localPictureBaseUrl != ''">
+                local_picture_base_url = #{localPictureBaseUrl},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.system_config where uid = #{uid}
+    </delete>
+
+</mapper>

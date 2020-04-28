@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xuexiblog.moguboot.dao.FileDao">
+
+    <resultMap type="xyz.xuexiblog.moguboot.entity.File" id="FileMap">
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="fileOldName" column="file_old_name" jdbcType="VARCHAR"/>
+        <result property="picName" column="pic_name" jdbcType="VARCHAR"/>
+        <result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
+        <result property="picExpandedName" column="pic_expanded_name" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+        <result property="fileSortUid" column="file_sort_uid" jdbcType="VARCHAR"/>
+        <result property="adminUid" column="admin_uid" jdbcType="VARCHAR"/>
+        <result property="userUid" column="user_uid" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="qiNiuUrl" column="qi_niu_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FileMap">
+        select
+          uid, file_old_name, pic_name, pic_url, pic_expanded_name, file_size, file_sort_uid, admin_uid, user_uid, status, create_time, update_time, qi_niu_url
+        from moguboot.file
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FileMap">
+        select
+          uid, file_old_name, pic_name, pic_url, pic_expanded_name, file_size, file_sort_uid, admin_uid, user_uid, status, create_time, update_time, qi_niu_url
+        from moguboot.file
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FileMap">
+        select
+          uid, file_old_name, pic_name, pic_url, pic_expanded_name, file_size, file_sort_uid, admin_uid, user_uid, status, create_time, update_time, qi_niu_url
+        from moguboot.file
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="fileOldName != null and fileOldName != ''">
+                and file_old_name = #{fileOldName}
+            </if>
+            <if test="picName != null and picName != ''">
+                and pic_name = #{picName}
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                and pic_url = #{picUrl}
+            </if>
+            <if test="picExpandedName != null and picExpandedName != ''">
+                and pic_expanded_name = #{picExpandedName}
+            </if>
+            <if test="fileSize != null">
+                and file_size = #{fileSize}
+            </if>
+            <if test="fileSortUid != null and fileSortUid != ''">
+                and file_sort_uid = #{fileSortUid}
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                and admin_uid = #{adminUid}
+            </if>
+            <if test="userUid != null and userUid != ''">
+                and user_uid = #{userUid}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="qiNiuUrl != null and qiNiuUrl != ''">
+                and qi_niu_url = #{qiNiuUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into moguboot.file(file_old_name, pic_name, pic_url, pic_expanded_name, file_size, file_sort_uid, admin_uid, user_uid, status, create_time, update_time, qi_niu_url)
+        values (#{fileOldName}, #{picName}, #{picUrl}, #{picExpandedName}, #{fileSize}, #{fileSortUid}, #{adminUid}, #{userUid}, #{status}, #{createTime}, #{updateTime}, #{qiNiuUrl})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update moguboot.file
+        <set>
+            <if test="fileOldName != null and fileOldName != ''">
+                file_old_name = #{fileOldName},
+            </if>
+            <if test="picName != null and picName != ''">
+                pic_name = #{picName},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                pic_url = #{picUrl},
+            </if>
+            <if test="picExpandedName != null and picExpandedName != ''">
+                pic_expanded_name = #{picExpandedName},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize},
+            </if>
+            <if test="fileSortUid != null and fileSortUid != ''">
+                file_sort_uid = #{fileSortUid},
+            </if>
+            <if test="adminUid != null and adminUid != ''">
+                admin_uid = #{adminUid},
+            </if>
+            <if test="userUid != null and userUid != ''">
+                user_uid = #{userUid},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="qiNiuUrl != null and qiNiuUrl != ''">
+                qi_niu_url = #{qiNiuUrl},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from moguboot.file where uid = #{uid}
+    </delete>
+
+</mapper>
